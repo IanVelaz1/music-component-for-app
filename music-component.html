@@ -24,10 +24,11 @@
         text-align: center;
         width: 33%;
         --paper-button:{
-          background-color:#1C1426;
+          background-color:rgb(14, 0, 48);
           color:white;
           @apply --music-controls-buttons
         }
+
         --paper-button-ink-color:var(--music-control-button-ink,blue);
       }
       .player-container{
@@ -77,13 +78,11 @@
 
       <div class="search-container" hidden$="[[invisibleControls]]">
         <music-search on-search-made="searchSong"></music-search>
-        <music-list on-song-selected="selectSong" filter-argument="[[searchArgument]]" hidden-list="[[hiddenList]]"
-          request-url="[[listRequestUrl]]"></music-list>
         <p class="song-name">[[songName]]</p>
-        <div class="slider-container">
-          <paper-slider min="0" value="[[songProgress]]" max="[[songDuration]]" on-dragging-changed="draggingChanged"
-            step="0.1" on-click="clickedSlider"></paper-slider>
-        </div>
+      </div>
+      <div class="slider-container">
+        <paper-slider min="0" value="[[songProgress]]" max="[[songDuration]]" on-dragging-changed="draggingChanged"
+          step="0.1" on-click="clickedSlider"></paper-slider>
       </div>
       <div id="audioControls">
         <paper-button class="controls" on-tap="decreaseVolume">-</paper-button>
@@ -293,9 +292,6 @@
       }
 
       selectSong(event) {
-        this.set("trackUrl", "");
-        this.set("trackUrl", `${this.songUrl}${event.detail}`);
-        this.set("songName", event.detail);
         const musicPlayer = this.shadowRoot.querySelector("#musicPlayer");
         musicPlayer.load();
         musicPlayer.addEventListener("loadedmetadata", (event) => {
